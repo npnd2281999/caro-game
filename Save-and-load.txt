@@ -1,0 +1,42 @@
+void Game::SaveGame(string name)
+{
+	name = name + ".txt";
+	fstream f;
+	f.open(name, ios::out);
+	for (int i = 0; i < b->getSize(); i++)
+	{
+		for (int j = 0; j < b->getSize(); j++)
+		{
+			f << b->getXAt(i, j) << " " << b->getYAt(i, j) << " " << b->getCheck(i, j) << endl;
+		}
+	}
+	f.close();
+}
+
+void Game::LoadGame(string name)
+{
+	name = name + ".txt";
+	fstream f;
+	f.open(name, ios::in);
+	int x, y, check;
+	b->drawBoard();
+	while (!f.eof())
+	{
+		f >> x >> y >> check;
+		Common::gotoXY(x, y);
+		if (check == -1)
+		{
+			cout << "X";
+		}
+		if (check == 1)
+		{
+			cout << "O";
+		}
+	}
+	loop = TRUE;
+}
+
+int Board::getCheck(int i,int j)
+{
+	return pArr[i][j].getCheck();
+}
